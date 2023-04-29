@@ -1,6 +1,12 @@
+import { Web3Button } from "@web3modal/react";
+
 /**
  * @package
  */
 export const Header = () => {
-  return <header>header</header>;
+  return (
+    <header>
+      <Web3Button />
+    </header>
+  );
 };
