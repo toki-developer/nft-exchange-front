@@ -1,7 +1,12 @@
 import type { ButtonHTMLAttributes } from "react";
-import { useNFTExchangeContractAddress } from "src/utils/contract";
+import { useEffect } from "react";
+import {
+  useNFTContract,
+  useNFTExchangeContractAddress,
+} from "src/utils/contract";
+import { useWriteApprove } from "src/utils/contract";
 
-import { STATUS } from "./StatusContext";
+import { STATUS, useStatusContext } from "./StatusContext";
 import { useFormValue } from "./useFormValue";
 
 /**
@@ -10,7 +15,7 @@ import { useFormValue } from "./useFormValue";
 export const ApproveButton = () => {
   const { status } = useFormValue();
 
-  if (status == STATUS.ERRPR) {
+  if (status !== STATUS.NO_APPROVED) {
     return <Button disabled />;
   }
   return <ApproveButtonImpl />;
@@ -18,29 +23,27 @@ export const ApproveButton = () => {
 
 const ApproveButtonImpl = () => {
   const { senderNFTContractAddress, senderNFTTokenId } = useFormValue();
-  // const contract = useNFTContract(senderNFTContractAddress);
-  const nftExchangeContractAddress = useNFTExchangeContractAddress();
+  const { status, write } = useWriteApprove(
+    senderNFTContractAddress,
+    senderNFTTokenId
+  );
+  const contract = useNFTContract(senderNFTContractAddress);
+  const NFT_EXCHANGE_ADDRESS = useNFTExchangeContractAddress();
+  const inputStatus = useStatusContext();
 
-  const handleApproveMyNFT = async () => {
-    // await contract
-    //   ?.approve(nftExchangeContractAddress, senderNFTTokenId)
-    //   .then(async (tx) => {
-    //     //TODO: tx.hashを使ってトランザクションに飛べるようにする
-    //     const res = await tx.wait();
-    //     if (res.status == 1) {
-    //       //TODO: トランザクションが成功したことを伝える
-    //       // オーダー登録のボタンを押せるようにする or approvedの確認のリクエストを投げる
-    //     } else {
-    //       //TODO: 1以外の場合について調査
-    //       // トランザクションが失敗したことを伝える
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     //TODO: エラー発生時の処理を考える
-    //     // 拒否した場合もここが呼ばれる
-    //     console.error(e);
-    //   });
-  };
+  const handleApproveMyNFT = () => write?.();
+
+  useEffect(() => {
+    if (status == "success" && inputStatus.status === STATUS.NO_APPROVED) {
+      contract?.getApproved(senderNFTTokenId).then((res) => {
+        if (res === NFT_EXCHANGE_ADDRESS) {
+          inputStatus.setStatus(STATUS.APPROVED);
+        } else {
+          inputStatus.setStatus(STATUS.NO_APPROVED);
+        }
+      });
+    }
+  }, [status, NFT_EXCHANGE_ADDRESS, inputStatus, senderNFTTokenId, contract]);
 
   return <Button onClick={handleApproveMyNFT} />;
 };
