@@ -39,6 +39,7 @@ const OrderButtonImpl = ({ account }: { account: Address }) => {
   const {} = useTransaction({
     hash: data?.hash,
     onSuccess: async (tx) => {
+      //TODO: useTransactionが1回だけ実行か確認
       // console.log("useTransaction on success");
       // console.log(tx);
       // console.log("wait");
