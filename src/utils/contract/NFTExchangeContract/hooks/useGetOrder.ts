@@ -8,12 +8,16 @@ const abi = NFT_EXCHANGE_ABI;
 /**
  * @package
  */
-export const useGetOrder = (senderAddress: `0x0${string}`) => {
+export const useGetOrder = (
+  senderAddress: `0x${string}`,
+  enabled?: boolean
+) => {
   const address = useNFTExchangeContractAddress();
   return useContractRead({
     address,
     abi,
     functionName: "getOrder",
     args: [senderAddress],
+    enabled: enabled ?? true,
   });
 };

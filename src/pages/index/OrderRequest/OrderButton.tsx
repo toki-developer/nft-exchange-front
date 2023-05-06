@@ -1,5 +1,7 @@
 import type { ButtonHTMLAttributes } from "react";
-import { useWriteCreateOrder } from "src/utils/contract";
+import { useGetOrder, useWriteCreateOrder } from "src/utils/contract";
+import type { Address } from "wagmi";
+import { useAccount, useTransaction } from "wagmi";
 
 import { STATUS } from "./StatusContext";
 import { useFormValue } from "./useFormValue";
@@ -9,14 +11,15 @@ import { useFormValue } from "./useFormValue";
  */
 export const OrderButton = () => {
   const { status } = useFormValue();
+  const { address } = useAccount();
 
-  if (status !== STATUS.APPROVED) {
+  if (status !== STATUS.APPROVED || !address) {
     return <Button disabled />;
   }
-  return <OrderButtonImpl />;
+  return <OrderButtonImpl account={address} />;
 };
 
-const OrderButtonImpl = () => {
+const OrderButtonImpl = ({ account }: { account: Address }) => {
   const {
     receiverNFTContractAddress,
     receiverNFTTokenId,
@@ -24,17 +27,44 @@ const OrderButtonImpl = () => {
     senderNFTTokenId,
   } = useFormValue();
 
-  const { data, status, write } = useWriteCreateOrder([
+  const { data, write } = useWriteCreateOrder([
     senderNFTContractAddress,
     senderNFTTokenId,
     receiverNFTContractAddress,
     receiverNFTTokenId,
   ]);
 
-  data;
-  status;
+  const { refetch } = useGetOrder(account);
 
-  return <Button onClick={write} />;
+  const {} = useTransaction({
+    hash: data?.hash,
+    onSuccess: async (tx) => {
+      // console.log("useTransaction on success");
+      // console.log(tx);
+      // console.log("wait");
+      const res = await tx.wait();
+      // console.log("wait done");
+      if (res.status == 1) {
+        refetch()
+          .then((res) => {
+            //TODO: 結果をUIに表示 + 共有用のURL作成
+            // console.log("success");
+            // console.log(res);
+            res
+          })
+          .catch((e) => {
+            //TODO: エラーのときの処理(再フェッチ)
+            console.error(e);
+          });
+      } else {
+        //TODO: オーダー登録に失敗した時の処理
+      }
+    },
+  });
+
+  const handleCreateOrder = () => write?.();
+
+  return <Button onClick={handleCreateOrder} />;
 };
 
 const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
