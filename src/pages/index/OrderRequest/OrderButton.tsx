@@ -24,19 +24,16 @@ const OrderButtonImpl = () => {
     senderNFTTokenId,
   } = useFormValue();
 
-  //TODO; オーダー登録の実装
-  const { data, error, isError, isSuccess, status, write } =
-    useWriteCreateOrder([
-      senderNFTContractAddress,
-      senderNFTTokenId,
-      receiverNFTContractAddress,
-      receiverNFTTokenId,
-    ]);
+  const { data, status, write } = useWriteCreateOrder([
+    senderNFTContractAddress,
+    senderNFTTokenId,
+    receiverNFTContractAddress,
+    receiverNFTTokenId,
+  ]);
+
   data;
-  error;
-  isError;
-  isSuccess;
   status;
+
   return <Button onClick={write} />;
 };
 
