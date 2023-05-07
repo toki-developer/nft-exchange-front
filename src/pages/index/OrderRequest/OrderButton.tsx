@@ -36,22 +36,17 @@ const OrderButtonImpl = ({ account }: { account: Address }) => {
 
   const { refetch } = useGetOrder(account);
 
-  const {} = useTransaction({
+  useTransaction({
     hash: data?.hash,
     onSuccess: async (tx) => {
-      //TODO: useTransactionが1回だけ実行か確認
-      // console.log("useTransaction on success");
-      // console.log(tx);
-      // console.log("wait");
       const res = await tx.wait();
-      // console.log("wait done");
       if (res.status == 1) {
         refetch()
           .then((res) => {
             //TODO: 結果をUIに表示 + 共有用のURL作成
             // console.log("success");
             // console.log(res);
-            res
+            res;
           })
           .catch((e) => {
             //TODO: エラーのときの処理(再フェッチ)

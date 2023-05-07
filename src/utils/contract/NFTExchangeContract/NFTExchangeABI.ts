@@ -177,11 +177,6 @@ export const NFT_EXCHANGE_ABI = [
             name: "receiverNFTTokenId",
             type: "uint256",
           },
-          {
-            internalType: "address",
-            name: "orderApprover",
-            type: "address",
-          },
         ],
         internalType: "struct NFTExchange.Order",
         name: "",

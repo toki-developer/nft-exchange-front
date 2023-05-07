@@ -21,3 +21,5 @@ export const useGetOrder = (
     enabled: enabled ?? true,
   });
 };
+
+export type Order = NonNullable<ReturnType<typeof useGetOrder>["data"]>;
