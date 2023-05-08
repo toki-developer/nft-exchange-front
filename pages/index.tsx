@@ -1,9 +1,9 @@
 import type { NextPageWithLayout } from "next";
 import { Layout } from "src/layouts";
-import { Index } from "src/pages/index";
+import { OrderRequest } from "src/pages/request";
 
 const IndexPage: NextPageWithLayout = () => {
-  return <Index />;
+  return <OrderRequest />;
 };
 
 IndexPage.getLayout = Layout;

@@ -7,7 +7,7 @@ import { Header } from "./Header";
  */
 export const Layout: NextLayout = (page) => {
   return (
-    <div>
+    <div className="bg-bgcolor text-textcolor-main">
       <Header />
       <main>{page}</main>
     </div>
