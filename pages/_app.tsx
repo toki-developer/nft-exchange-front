@@ -1,3 +1,5 @@
+import "tailwindcss/tailwind.css";
+
 import type { AppPropsWithLayout } from "next/app";
 import Head from "next/head";
 import type { ReactElement } from "react";

@@ -13,8 +13,8 @@ export const Index: FC = () => {
 
   useEffect(() => {
     if (router.isReady) {
-      if(type == "approve"){
-        setPageType("approve")
+      if (type == "approve") {
+        setPageType("approve");
       }
     }
   }, [type, router.isReady]);
