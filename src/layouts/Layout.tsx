@@ -1,15 +1,17 @@
 import type { NextLayout } from "next";
 
 import { Header } from "./Header";
+import { HowToUse } from "./HowToUse";
 
 /**
  * @package
  */
 export const Layout: NextLayout = (page) => {
   return (
-    <div className="bg-bgcolor text-textcolor-main">
+    <div className="bg-bgcolor text-textcolor-main min-h-screen">
       <Header />
-      <main>{page}</main>
+      <main className="max-w-lg mx-auto mt-16">{page}</main>
+      <HowToUse />
     </div>
   );
 };
