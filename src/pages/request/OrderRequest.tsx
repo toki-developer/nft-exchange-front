@@ -1,60 +1,28 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { MainCard } from "src/components/MainCard";
 
 import { ApproveButton } from "./ApproveButton";
+import { NFTFormField } from "./NFTFormField";
 import { OrderButton } from "./OrderButton";
 import { StatusContextProvider } from "./StatusContext";
 import type { NFTForm } from "./type";
-
-const Required = { required: { value: true, message: "入力が未完了です" } };
-const AddressFormat = {
-  pattern: {
-    value: /^0x[0-9a-fA-F]{40}$/,
-    message: "アドレス入力に不備があります",
-  },
-};
 
 /**
  * @package
  */
 export const OrderRequest = () => {
   const form = useForm<NFTForm>({ mode: "onChange" });
-  const {
-    formState: { errors },
-    register,
-  } = form;
 
   return (
     <FormProvider {...form}>
       <StatusContextProvider>
-        <label>
-          <input
-            {...register("senderNFTContractAddress", {
-              ...Required,
-              ...AddressFormat,
-            })}
-          />
-          <p>{errors.senderNFTContractAddress?.message}</p>
-        </label>
-        <label>
-          <input {...register("senderNFTTokenId", { ...Required })} />
-          <p>{errors.senderNFTTokenId?.message}</p>
-        </label>
-        <br />
-        <label>
-          <input
-            {...register("receiverNFTContractAddress", {
-              ...Required,
-              ...AddressFormat,
-            })}
-          />
-          <p>{errors.receiverNFTContractAddress?.message}</p>
-        </label>
-        <label>
-          <input {...register("receiverNFTTokenId", { ...Required })} />
-          <p>{errors.receiverNFTTokenId?.message}</p>
-        </label>
-        <ApproveButton />
-        <OrderButton />
+        <MainCard>
+          <NFTFormField />
+          <div className="flex justify-center gap-6 mt-8">
+            <ApproveButton />
+            <OrderButton />
+          </div>
+        </MainCard>
       </StatusContextProvider>
     </FormProvider>
   );

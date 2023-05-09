@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
+import { BlueButton } from "src/components/Button/BlueButton";
 import { useGetOrder, useWriteCreateOrder } from "src/utils/contract";
 import type { Address } from "wagmi";
 import { useAccount, useTransaction } from "wagmi";
@@ -64,5 +65,5 @@ const OrderButtonImpl = ({ account }: { account: Address }) => {
 };
 
 const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return <button {...props}>オーダー登録</button>;
+  return <BlueButton {...props}>オファー作成</BlueButton>;
 };

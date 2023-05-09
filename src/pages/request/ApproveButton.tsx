@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
+import { BlueButton } from "src/components/Button/BlueButton";
 import {
   useNFTContract,
   useNFTExchangeContractAddress,
@@ -56,5 +57,5 @@ const ApproveButtonImpl = () => {
 };
 
 const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return <button {...props}>Approve</button>;
+  return <BlueButton {...props}>Approve</BlueButton>;
 };
