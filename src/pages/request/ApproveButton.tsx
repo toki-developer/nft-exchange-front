@@ -1,11 +1,7 @@
-import { type ButtonHTMLAttributes, useState } from "react";
+import { type ButtonHTMLAttributes, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { BlueButton } from "src/components/Button/BlueButton";
 import { TransactionToastContent } from "src/components/Toast";
-import {
-  useNFTContract,
-  useNFTExchangeContractAddress,
-} from "src/utils/contract";
 import { useWriteApprove } from "src/utils/contract";
 import { useTransaction } from "wagmi";
 
@@ -18,7 +14,7 @@ import { useFormValue } from "./useFormValue";
 export const ApproveButton = () => {
   const { status } = useFormValue();
 
-  if (status == STATUS.NO_APPROVED) {
+  if (status !== STATUS.NO_APPROVED) {
     return <Button disabled />;
   }
   return <ApproveButtonImpl />;
@@ -26,13 +22,11 @@ export const ApproveButton = () => {
 
 const ApproveButtonImpl = () => {
   const { senderNFTContractAddress, senderNFTTokenId } = useFormValue();
-  const { data, write } = useWriteApprove(
-    senderNFTContractAddress,
-    senderNFTTokenId
-  );
+  const { data, isError, write } = useWriteApprove({
+    nftAddress: senderNFTContractAddress,
+    nftTokenId: senderNFTTokenId,
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const contract = useNFTContract(senderNFTContractAddress);
-  const NFT_EXCHANGE_ADDRESS = useNFTExchangeContractAddress();
   const inputStatus = useStatusContext();
 
   const handleApproveMyNFT = () => {
@@ -49,19 +43,18 @@ const ApproveButtonImpl = () => {
         success: <p>Approveに成功しました</p>,
         error: <p>Approveに失敗しました</p>,
       });
-      const res = await txWait;
-      if (res.status == 1) {
-        contract?.getApproved(senderNFTTokenId).then((res) => {
-          if (res === NFT_EXCHANGE_ADDRESS) {
+      await txWait
+        .then((res) => {
+          if (res.status == 1) {
             inputStatus.setStatus(STATUS.APPROVED);
           } else {
-            //TODO: 成功しているのに、approve先が違う場合
-            inputStatus.setStatus(STATUS.NO_APPROVED);
+            //TODO: エラー時の処理
           }
+        })
+        .catch((e) => {
+          //TODO: エラーの時の処理
+          console.error(e);
         });
-      } else {
-        //TODO: エラー時の処理
-      }
       setIsLoading(false);
     },
     onError: (e) => {
@@ -70,6 +63,13 @@ const ApproveButtonImpl = () => {
       setIsLoading(false);
     },
   });
+
+  //metamaskのrejectをキャッチ
+  useEffect(() => {
+    if (isError) {
+      setIsLoading(false);
+    }
+  }, [isError]);
 
   return <Button disabled={isLoading} onClick={handleApproveMyNFT} />;
 };

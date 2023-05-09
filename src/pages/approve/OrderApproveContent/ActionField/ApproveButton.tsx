@@ -9,10 +9,10 @@ type Props = {
 };
 
 export const ApproveButton = ({ isApproved, onWriteApprove, order }: Props) => {
-  const { data, write } = useWriteApprove(
-    order.receiverNFTContractAddress,
-    order.receiverNFTTokenId
-  );
+  const { data, write } = useWriteApprove({
+    nftAddress: order.receiverNFTContractAddress,
+    nftTokenId: order.receiverNFTTokenId,
+  });
 
   useTransaction({
     hash: data?.hash,
