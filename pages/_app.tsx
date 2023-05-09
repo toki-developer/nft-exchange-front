@@ -3,6 +3,7 @@ import "tailwindcss/tailwind.css";
 import type { AppPropsWithLayout } from "next/app";
 import Head from "next/head";
 import type { ReactElement } from "react";
+import { CustomToast } from "src/components/Toast";
 import { WagmiConfigClient } from "src/libs/wagmi/WagmiConfigClient";
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
@@ -14,7 +15,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         <title>sample</title>
       </Head>
       <WagmiConfigClient>
-        {getLayout(<Component {...pageProps} />)}
+        <>
+          {getLayout(<Component {...pageProps} />)}
+          <CustomToast />
+        </>
       </WagmiConfigClient>
     </>
   );

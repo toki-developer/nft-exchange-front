@@ -18,7 +18,7 @@ export const OrderRequest = () => {
       <StatusContextProvider>
         <MainCard>
           <NFTFormField />
-          <div className="flex justify-center gap-6 mt-8">
+          <div className="flex justify-center gap-6 mt-8 ">
             <ApproveButton />
             <OrderButton />
           </div>

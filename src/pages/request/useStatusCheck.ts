@@ -27,7 +27,7 @@ export const useStatusCheck = () => {
   const { setStatus, status } = useStatusContext();
   const [prevNFT, setPrevNFT] = useState<string>("");
 
-  const isError = Object.keys(errors).length == 0;
+  const isNoError = Object.keys(errors).length == 0;
   const isFullInput =
     senderNFTContractAddress &&
     senderNFTTokenId &&
@@ -37,7 +37,7 @@ export const useStatusCheck = () => {
       : false;
 
   useEffect(() => {
-    if (isError && isFullInput) {
+    if (isNoError && isFullInput) {
       if (prevNFT !== `${senderNFTContractAddress}-${senderNFTTokenId}`) {
         contract
           ?.getApproved(senderNFTTokenId)
@@ -61,7 +61,7 @@ export const useStatusCheck = () => {
     }
   }, [
     isFullInput,
-    isError,
+    isNoError,
     senderNFTContractAddress,
     senderNFTTokenId,
     status,

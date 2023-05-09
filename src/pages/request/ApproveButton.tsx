@@ -1,5 +1,7 @@
-import type { ButtonHTMLAttributes } from "react";
+import { type ButtonHTMLAttributes, useState } from "react";
+import { toast } from "react-hot-toast";
 import { BlueButton } from "src/components/Button/BlueButton";
+import { TransactionToastContent } from "src/components/Toast";
 import {
   useNFTContract,
   useNFTExchangeContractAddress,
@@ -16,7 +18,7 @@ import { useFormValue } from "./useFormValue";
 export const ApproveButton = () => {
   const { status } = useFormValue();
 
-  if (status !== STATUS.NO_APPROVED) {
+  if (status == STATUS.NO_APPROVED) {
     return <Button disabled />;
   }
   return <ApproveButtonImpl />;
@@ -28,16 +30,26 @@ const ApproveButtonImpl = () => {
     senderNFTContractAddress,
     senderNFTTokenId
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const contract = useNFTContract(senderNFTContractAddress);
   const NFT_EXCHANGE_ADDRESS = useNFTExchangeContractAddress();
   const inputStatus = useStatusContext();
 
-  const handleApproveMyNFT = () => write?.();
+  const handleApproveMyNFT = () => {
+    setIsLoading(true);
+    write?.();
+  };
 
   useTransaction({
     hash: data?.hash,
     onSuccess: async (tx) => {
-      const res = await tx.wait();
+      const txWait = tx.wait();
+      toast.promise(txWait, {
+        loading: <TransactionToastContent tx={tx.hash} />,
+        success: <p>Approveに成功しました</p>,
+        error: <p>Approveに失敗しました</p>,
+      });
+      const res = await txWait;
       if (res.status == 1) {
         contract?.getApproved(senderNFTTokenId).then((res) => {
           if (res === NFT_EXCHANGE_ADDRESS) {
@@ -50,10 +62,16 @@ const ApproveButtonImpl = () => {
       } else {
         //TODO: エラー時の処理
       }
+      setIsLoading(false);
+    },
+    onError: (e) => {
+      //TODO: エラーの処理
+      console.error(e);
+      setIsLoading(false);
     },
   });
 
-  return <Button onClick={handleApproveMyNFT} />;
+  return <Button disabled={isLoading} onClick={handleApproveMyNFT} />;
 };
 
 const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
