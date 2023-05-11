@@ -18,6 +18,9 @@ export const OrderApprove = () => {
     );
   }
 
-  //TODO: sender入力フォーム
-  return <div>sender入力フォームを後で作る</div>;
+  return (
+    <MainCard>
+      <p>オファー作成者からURLを共有してもらってください</p>
+    </MainCard>
+  );
 };

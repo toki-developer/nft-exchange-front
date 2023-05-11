@@ -3,6 +3,7 @@ import { Web3Button } from "@web3modal/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { pagesPath } from "src/libs/path/$path";
+import type { Address } from "wagmi";
 
 /**
  * @package
@@ -26,8 +27,12 @@ const TabMenu = () => {
 
   const handleChange = (value: string) => {
     setValue(value as "create" | "approve");
+    const sender = router.query.sender as Address;
+    const query = sender ? { sender } : undefined;
     router.push(
-      value == "approve" ? pagesPath.approve.$url() : pagesPath.$url()
+      value == "approve"
+        ? pagesPath.approve.$url({ query })
+        : pagesPath.$url({ query })
     );
   };
 

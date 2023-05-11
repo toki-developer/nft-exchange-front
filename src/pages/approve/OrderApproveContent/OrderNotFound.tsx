@@ -1,3 +1,3 @@
 export const OrderNotFound = () => {
-  return <div>オーダーは見つかりません</div>;
+  return <p className="text-center">オファーが見つかりません</p>;
 };
