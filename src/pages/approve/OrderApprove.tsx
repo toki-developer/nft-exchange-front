@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { MainCard } from "src/components/MainCard";
 
 import { OrderApproveContentWrapper } from "./OrderApproveContent";
 
@@ -10,7 +11,11 @@ export const OrderApprove = () => {
   const sender = router.query.sender as `0x${string}` | null;
 
   if (sender) {
-    return <OrderApproveContentWrapper sender={sender} />;
+    return (
+      <MainCard>
+        <OrderApproveContentWrapper sender={sender} />
+      </MainCard>
+    );
   }
 
   //TODO: sender入力フォーム

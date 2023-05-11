@@ -10,9 +10,10 @@ import { ExchangeButton } from "./ExchangeButton";
 type Props = {
   order: Order;
   sender: Address;
+  onComplete: () => void
 };
 
-export const ActionField = ({ order, sender }: Props) => {
+export const ActionField = ({ order, sender, onComplete }: Props) => {
   const { receiverNFTContractAddress, receiverNFTTokenId } = order;
   const [isApproved, setIsApproved] = useState<boolean>(false);
   const contractAddreess = useNFTExchangeContractAddress();
@@ -26,13 +27,13 @@ export const ActionField = ({ order, sender }: Props) => {
   });
 
   return (
-    <section>
+    <div className="flex justify-center gap-6 mt-8 ">
       <ApproveButton
         isApproved={isApproved}
         onWriteApprove={refetch}
         order={order}
       />
-      <ExchangeButton isApproved={isApproved} order={order} sender={sender} />
-    </section>
+      <ExchangeButton isApproved={isApproved} order={order} sender={sender} onComplete={onComplete} />
+    </div>
   );
 };

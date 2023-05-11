@@ -27,11 +27,3 @@ export const OrderRequest = () => {
     </FormProvider>
   );
 };
-
-//TODO: 現在登録済みのオーダーを表示する
-//TODO: 現在登録済みのオーダーを初期値にする
-//TODO: approveチェックをする
-//TODO: approveが完了した段階で、オーダー登録ボタンを押せるようにする
-//TODO: TODO項目を修正する
-//TODO: コントラクトが存在しない時の挙動など、細かな調整 (?を使ってるとこ)
-//TODO: バリデーションを付ける
