@@ -12,7 +12,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <Head>
-        <title>sample</title>
+        <title>NFT交換ツール</title>
       </Head>
       <WagmiConfigClient>
         <>

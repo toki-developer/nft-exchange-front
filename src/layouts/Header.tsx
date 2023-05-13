@@ -1,20 +1,33 @@
 import { Toggle, ToggleItem } from "@tremor/react";
-import { Web3Button } from "@web3modal/react";
+import { Web3Button, Web3NetworkSwitch } from "@web3modal/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { pagesPath } from "src/libs/path/$path";
-import type { Address } from "wagmi";
+import { type Address, useNetwork } from "wagmi";
 
 /**
  * @package
  */
 export const Header = () => {
   return (
-    <header className="flex relative items-center justify-between py-6 px-8">
-      <p className="font-bold text-lg">NFT交換ツール</p>
-      <TabMenu />
-      <Web3Button />
+    <header className="grid grid-cols-3 py-6 px-8">
+      <p className="font-bold text-lg ">NFT交換ツール</p>
+      <div className="flex justify-center">
+        <TabMenu />
+      </div>
+      <RightMenu />
     </header>
+  );
+};
+
+const RightMenu = () => {
+  const { chain } = useNetwork();
+
+  return (
+    <div className="flex items-center gap-3 justify-end">
+      <Web3NetworkSwitch />
+      {chain?.unsupported ? <Web3Button /> : <Web3Button />}
+    </div>
   );
 };
 
