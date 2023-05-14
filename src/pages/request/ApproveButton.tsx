@@ -1,6 +1,6 @@
 import { type ButtonHTMLAttributes, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { BlueButton } from "src/components/Button/BlueButton";
+import { BlueButton } from "src/components/Button";
 import { TransactionToastContent } from "src/components/Toast";
 import { useWriteApprove } from "src/utils/contract";
 import { useTransaction } from "wagmi";

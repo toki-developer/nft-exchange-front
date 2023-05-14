@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 
 type Props = {
-  tag?: "h2";
+  tag?: "h2" | "h3";
   className?: string;
   borderColor?: string;
 };

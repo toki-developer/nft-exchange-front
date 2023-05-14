@@ -8,7 +8,7 @@ import { HowToUse } from "./HowToUse";
  */
 export const Layout: NextLayout = (page) => {
   return (
-    <div className="bg-bgcolor text-textcolor-main min-h-screen">
+    <div>
       <Header />
       <main className="max-w-xl mx-auto mt-16">{page}</main>
       <HowToUse />

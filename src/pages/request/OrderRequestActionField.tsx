@@ -112,7 +112,7 @@ const OrderRequestActionFieldImpl = ({ address }: { address: Address }) => {
     <div className="flex justify-center gap-6 mt-8 ">
       <ApproveButton />
       <OrderButton onOfferCreated={handleOffreCreated} />
-      {orderData ? (
+      {orderData?.senderNFTContractAddress !== ethers.constants.AddressZero ? (
         <div className="absolute right-6 bottom-6 text-sm">
           <button
             className="underline text-textcolor-sub"
@@ -122,7 +122,8 @@ const OrderRequestActionFieldImpl = ({ address }: { address: Address }) => {
           </button>
         </div>
       ) : null}
-      {orderData ? (
+      {orderData &&
+      orderData.senderNFTContractAddress !== ethers.constants.AddressZero ? (
         <Modal>
           <ModalContent
             order={orderData}

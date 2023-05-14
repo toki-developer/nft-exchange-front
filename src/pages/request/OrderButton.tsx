@@ -1,12 +1,9 @@
-import { ethers } from "ethers";
 import { type ButtonHTMLAttributes, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { BlueButton } from "src/components/Button/BlueButton";
-import { useModal } from "src/components/Modal";
+import { BlueButton } from "src/components/Button";
 import { TransactionToastContent } from "src/components/Toast";
-import { useGetOrder, useWriteCreateOrder } from "src/utils/contract";
-import type { Address } from "wagmi";
-import { useAccount, useTransaction } from "wagmi";
+import { useWriteCreateOrder } from "src/utils/contract";
+import { useTransaction } from "wagmi";
 
 import { STATUS } from "./StatusContext";
 import { useFormValue } from "./useFormValue";
