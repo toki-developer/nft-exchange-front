@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { ArrowPath } from "src/components/Icon";
 
 import type { NFTForm } from "./type";
+import { useGetNftMetadata } from "./useGetNftMetadata";
 
 const Required = { required: { value: true, message: "入力必須です" } };
 const AddressFormat = {
@@ -21,6 +22,8 @@ export const NFTFormField = () => {
     register,
   } = useFormContext<NFTForm>();
 
+  const { receiverNFT, senderNFT } = useGetNftMetadata();
+
   return (
     <div>
       <fieldset>
@@ -32,10 +35,15 @@ export const NFTFormField = () => {
             ...AddressFormat,
           })}
         />
-        <TokenIdInput
-          errorMessage={errors.senderNFTTokenId}
-          {...register("senderNFTTokenId", { ...Required })}
-        />
+        <div className="flex items-center">
+          <TokenIdInput
+            errorMessage={errors.senderNFTTokenId}
+            {...register("senderNFTTokenId", { ...Required })}
+          />
+          {errors.senderNFTTokenId || errors.senderNFTTokenId ? null : (
+            <NFTInfo nft={senderNFT} />
+          )}
+        </div>
       </fieldset>
       <div className="my-4 flex justify-center">
         <ArrowPath className="text-primary w-10 h-10 rotate-90" />
@@ -49,10 +57,16 @@ export const NFTFormField = () => {
             ...AddressFormat,
           })}
         />
-        <TokenIdInput
-          errorMessage={errors.receiverNFTTokenId}
-          {...register("receiverNFTTokenId", { ...Required })}
-        />
+        <div className="flex items-center">
+          <TokenIdInput
+            errorMessage={errors.receiverNFTTokenId}
+            {...register("receiverNFTTokenId", { ...Required })}
+          />
+          {errors.receiverNFTContractAddress ||
+          errors.receiverNFTTokenId ? null : (
+            <NFTInfo nft={receiverNFT} />
+          )}
+        </div>
       </fieldset>
     </div>
   );
@@ -99,7 +113,7 @@ const TokenIdInput = forwardRef<HTMLInputElement, TokenIdInputProps>(
       <label>
         <p className="text-xs text-textcolor-sub mt-2 pl-1 mb-1">トークンID</p>
         <input
-          className={`bg-bgcolor  border rounded-md text-lg pl-2 w-1/4 text-right ${
+          className={`bg-bgcolor  border rounded-md text-lg pl-2 text-right ${
             errorMessage ? "border-red-500" : "border-gray-700"
           }`}
           placeholder="1"
@@ -118,3 +132,36 @@ const TokenIdInput = forwardRef<HTMLInputElement, TokenIdInputProps>(
 );
 
 TokenIdInput.displayName = "TokenIdInput";
+
+const NFTInfo = ({
+  nft,
+}: {
+  nft: ReturnType<typeof useGetNftMetadata>["senderNFT"];
+}) => {
+  if (!nft) {
+    return null;
+  }
+
+  return (
+    <div className="flex gap-4 items-center flex-1">
+      {nft.imgUrl ? (
+        <div className=" flex-1 flex justify-end">
+          <img
+            src={nft.imgUrl}
+            alt="sender nft image"
+            className="w-[60px] h-[60px]"
+          />
+        </div>
+      ) : (
+        <div className="flex-1" />
+      )}
+      {nft.name ? (
+        <p className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">
+          {nft.name}
+        </p>
+      ) : (
+        <div className="flex-1" />
+      )}
+    </div>
+  );
+};
