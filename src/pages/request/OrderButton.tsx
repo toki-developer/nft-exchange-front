@@ -8,24 +8,26 @@ import { useGetOrder, useWriteCreateOrder } from "src/utils/contract";
 import type { Address } from "wagmi";
 import { useAccount, useTransaction } from "wagmi";
 
-import { ModalContent } from "./ModalContent";
 import { STATUS } from "./StatusContext";
 import { useFormValue } from "./useFormValue";
+
+type Props = {
+  onOfferCreated: () => void;
+};
 
 /**
  * @package
  */
-export const OrderButton = () => {
+export const OrderButton = ({ onOfferCreated }: Props) => {
   const { status } = useFormValue();
-  const { address } = useAccount();
 
-  if (status !== STATUS.APPROVED || !address) {
+  if (status !== STATUS.APPROVED) {
     return <Button disabled />;
   }
-  return <OrderButtonImpl account={address} />;
+  return <OrderButtonImpl onOfferCreated={onOfferCreated} />;
 };
 
-const OrderButtonImpl = ({ account }: { account: Address }) => {
+const OrderButtonImpl = ({ onOfferCreated }: Props) => {
   const {
     receiverNFTContractAddress,
     receiverNFTTokenId,
@@ -40,10 +42,7 @@ const OrderButtonImpl = ({ account }: { account: Address }) => {
     receiverNFTTokenId,
   ]);
 
-  const { data: orderData, refetch } = useGetOrder(account, false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const { Modal, handleOpen } = useModal();
 
   useTransaction({
     hash: data?.hash,
@@ -57,20 +56,7 @@ const OrderButtonImpl = ({ account }: { account: Address }) => {
       await txWait
         .then((res) => {
           if (res.status == 1) {
-            refetch()
-              .then((res) => {
-                if (
-                  res.status == "success" ||
-                  orderData?.receiverNFTContractAddress !==
-                    ethers.constants.AddressZero
-                ) {
-                  handleOpen();
-                }
-              })
-              .catch((e) => {
-                //TODO: エラーのときの処理(再フェッチ)
-                console.error(e);
-              });
+            onOfferCreated();
           } else {
             //TODO: オーダー登録に失敗した時の処理
           }
@@ -99,16 +85,7 @@ const OrderButtonImpl = ({ account }: { account: Address }) => {
     write?.();
   };
 
-  return (
-    <>
-      {orderData ? (
-        <Modal>
-          <ModalContent order={orderData} />
-        </Modal>
-      ) : null}
-      <Button disabled={isLoading} onClick={handleCreateOrder} />
-    </>
-  );
+  return <Button disabled={isLoading} onClick={handleCreateOrder} />;
 };
 
 const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {

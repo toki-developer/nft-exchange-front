@@ -1,11 +1,15 @@
+import dynamic from "next/dynamic";
 import { FormProvider, useForm } from "react-hook-form";
 import { MainCard } from "src/components/MainCard";
 
-import { ApproveButton } from "./ApproveButton";
 import { NFTFormField } from "./NFTFormField";
-import { OrderButton } from "./OrderButton";
 import { StatusContextProvider } from "./StatusContext";
 import type { NFTForm } from "./type";
+
+const OrderRequestActionField = dynamic(
+  () => import("./OrderRequestActionField"),
+  { ssr: false }
+);
 
 /**
  * @package
@@ -18,10 +22,7 @@ export const OrderRequest = () => {
       <StatusContextProvider>
         <MainCard>
           <NFTFormField />
-          <div className="flex justify-center gap-6 mt-8 ">
-            <ApproveButton />
-            <OrderButton />
-          </div>
+          <OrderRequestActionField />
         </MainCard>
       </StatusContextProvider>
     </FormProvider>

@@ -13,7 +13,7 @@ const ModalBase = ({
   onClose,
 }: PropsWithChildren<ModalProps>) => {
   return (
-    <Transition appear show={isModalVisible} as="div">
+    <Transition appear show={isModalVisible} as="div" className="absolute">
       <Dialog as="div" className={`fixed inset-0 z-50`} onClose={onClose}>
         <div className="py-7 min-h-screen">
           <Transition.Child
@@ -34,6 +34,7 @@ const ModalBase = ({
             leave="ease-in duration-200"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
+            className="w-fit mx-auto"
           >
             <div
               className={`p-8 text-textcolor-main m-auto w-[600px] border border-gray-600 bg-gray-800 rounded-md transition-all transform`}
