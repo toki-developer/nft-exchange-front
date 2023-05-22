@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { BlueButton } from "src/components/Button";
 import { TransactionToastContent } from "src/components/Toast";
 import { useWriteApprove } from "src/utils/contract";
+import { logalert } from "src/utils/logalert";
 import { useTransaction } from "wagmi";
 
 import { STATUS, useStatusContext } from "./StatusContext";
@@ -54,12 +55,14 @@ const ApproveButtonImpl = () => {
         .catch((e) => {
           //TODO: エラーの時の処理
           console.error(e);
+          logalert(e.message);
         });
       setIsLoading(false);
     },
     onError: (e) => {
       //TODO: エラーの処理
       console.error(e);
+      logalert(e.message);
       setIsLoading(false);
     },
   });

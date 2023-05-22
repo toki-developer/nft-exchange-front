@@ -4,6 +4,7 @@ import {
   useNFTContract,
   useNFTExchangeContractAddress,
 } from "src/utils/contract";
+import { logalert } from "src/utils/logalert";
 
 import { STATUS, useStatusContext } from "./StatusContext";
 import type { NFTForm } from "./type";
@@ -51,6 +52,7 @@ export const useStatusCheck = () => {
           })
           .catch((e) => {
             console.error(e);
+            logalert(e.message);
           });
       }
     } else {

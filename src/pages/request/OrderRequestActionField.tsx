@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useModal } from "src/components/Modal";
 import { useGetOrder } from "src/utils/contract";
 import { useAlchemy } from "src/utils/hooks/useAlchemy";
+import { logalert } from "src/utils/logalert";
 import { imgStr } from "src/utils/string";
 import type { Address } from "wagmi";
 import { useAccount } from "wagmi";
@@ -71,6 +72,7 @@ const OrderRequestActionFieldImpl = ({ address }: { address: Address }) => {
       .catch((e) => {
         //TODO: エラーのときの処理(再フェッチ)
         console.error(e);
+        logalert(e.message);
       });
   };
 
@@ -105,6 +107,7 @@ const OrderRequestActionFieldImpl = ({ address }: { address: Address }) => {
       .catch((e) => {
         //TODO: エラー
         console.error(e);
+        logalert(e.message);
       });
   }, [orderData, alchemy]);
 

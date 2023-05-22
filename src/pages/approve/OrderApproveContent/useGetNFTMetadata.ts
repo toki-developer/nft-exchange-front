@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { useGetOrder } from "src/utils/contract";
 import { useAlchemy } from "src/utils/hooks/useAlchemy";
+import { logalert } from "src/utils/logalert";
 import { imgStr } from "src/utils/string";
 
 type Props = {
@@ -47,8 +48,9 @@ export const useGetNftMetadata = ({ order }: Props) => {
           },
         });
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.error(e);
+        logalert(e.message);
       });
   }, [
     order.senderNFTContractAddress,

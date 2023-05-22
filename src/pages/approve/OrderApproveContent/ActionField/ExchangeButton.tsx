@@ -4,6 +4,7 @@ import { BlueButton } from "src/components/Button";
 import { TransactionToastContent } from "src/components/Toast";
 import type { Order } from "src/utils/contract";
 import { useWriteApproveOrder } from "src/utils/contract";
+import { logalert } from "src/utils/logalert";
 import type { Address } from "wagmi";
 import { useTransaction } from "wagmi";
 
@@ -59,6 +60,7 @@ const ExchangeActiveButton = ({ onComplete, order, sender }: Props) => {
         .catch((e) => {
           //TODO: エラー時の処理
           console.error(e);
+          logalert(e.message);
         });
 
       toast.promise(txPromise, {
@@ -71,6 +73,7 @@ const ExchangeActiveButton = ({ onComplete, order, sender }: Props) => {
     },
     onError: async (e) => {
       console.error(e);
+      logalert(e.message);
       //TODO: エラー時の処理
     },
   });

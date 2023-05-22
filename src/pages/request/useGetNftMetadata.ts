@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { alchemySepolia } from "src/libs/alchemy/alchemy";
 import { useAlchemy } from "src/utils/hooks/useAlchemy";
+import { logalert } from "src/utils/logalert";
 import { imgStr } from "src/utils/string";
 
 import type { NFTForm } from "./type";
@@ -65,6 +66,7 @@ export const useGetNftMetadata = () => {
       })
       .catch((e) => {
         console.error(e);
+        logalert(e.message);
       });
   }, [
     isReceiverValid,
@@ -93,6 +95,7 @@ export const useGetNftMetadata = () => {
       })
       .catch((e) => {
         console.error(e);
+        logalert(e.message);
       });
   }, [
     isSenderValid,
