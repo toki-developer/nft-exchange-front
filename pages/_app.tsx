@@ -1,5 +1,6 @@
 import "tailwindcss/tailwind.css";
 
+import { Analytics } from "@vercel/analytics/react";
 import type { AppPropsWithLayout } from "next/app";
 import Head from "next/head";
 import type { ReactElement } from "react";
@@ -20,6 +21,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
           <CustomToast />
         </>
       </WagmiConfigClient>
+      <Analytics />
     </>
   );
 };
