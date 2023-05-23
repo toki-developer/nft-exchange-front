@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useModal } from "src/components/Modal";
 import { useGetOrder } from "src/utils/contract";
-import { useAlchemy } from "src/utils/hooks/useAlchemy";
+import { useNetworkConst } from "src/utils/hooks";
 import { logalert } from "src/utils/logalert";
 import { imgStr } from "src/utils/string";
 import type { Address } from "wagmi";
@@ -49,7 +49,7 @@ const OrderRequestActionFieldImpl = ({ address }: { address: Address }) => {
   const { data: orderData, refetch } = useGetOrder(address);
   const [nftMetadata, setNFTMetadata] = useState<NFTMetadataList>(defaultVal);
   const { Modal, handleOpen } = useModal();
-  const alchemy = useAlchemy();
+  const { alchemy } = useNetworkConst();
 
   const [modalTitle, setModalTitle] = useState<string>("作成済みオファー");
 

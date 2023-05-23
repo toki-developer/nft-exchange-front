@@ -1,4 +1,4 @@
-import { useEtherscanURL } from "src/utils/contract";
+import { useNetworkConst } from "src/utils/hooks";
 
 type Props = {
   tx: string;
@@ -8,13 +8,13 @@ type Props = {
  * @package
  */
 export const TransactionToastContent = ({ tx }: Props) => {
-  const etherscanURL = useEtherscanURL();
+  const { blockexplorerPrefix } = useNetworkConst();
 
   return (
     <p>
       <span className="text-sm">Transaction:</span>
       <a
-        href={`${etherscanURL}/tx/${tx}`}
+        href={`${blockexplorerPrefix}/tx/${tx}`}
         className="underline ml-2 font-bold"
         target="_blank"
         rel="noreferrer"

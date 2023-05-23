@@ -1,5 +1,5 @@
 import type { BigNumber } from "ethers";
-import { useNFTExchangeContractAddress } from "src/utils/contract";
+import { useNetworkConst } from "src/utils/hooks";
 import type { Address, UsePrepareContractWriteConfig } from "wagmi";
 import { useContractWrite } from "wagmi";
 import { usePrepareContractWrite } from "wagmi";
@@ -15,14 +15,14 @@ type Props = {
  * @package
  */
 export const useWriteApprove = ({ nftAddress, nftTokenId, ...rest }: Props) => {
-  const nftExchangeAddress = useNFTExchangeContractAddress();
+  const { nftExchangeContractAddress } = useNetworkConst();
 
   const { config } = usePrepareContractWrite({
     ...rest,
     address: nftAddress,
     abi: NFT_ABI,
     functionName: "approve",
-    args: [nftExchangeAddress, nftTokenId],
+    args: [nftExchangeContractAddress, nftTokenId],
   });
   return useContractWrite(config);
 };

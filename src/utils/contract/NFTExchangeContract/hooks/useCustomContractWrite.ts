@@ -1,7 +1,7 @@
+import { useNetworkConst } from "src/utils/hooks";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
 import { NFT_EXCHANGE_ABI } from "../NFTExchangeABI";
-import { useNFTExchangeContractAddress } from "../useNFTExchangeContractAddress";
 
 /**
  * @package
@@ -32,9 +32,10 @@ type Param =
  * @package
  */
 export const useCustomContractWrite = ({ args, functionName }: Param) => {
-  const address = useNFTExchangeContractAddress();
+  const { nftExchangeContractAddress } = useNetworkConst();
+
   const { config } = usePrepareContractWrite({
-    address: address,
+    address: nftExchangeContractAddress,
     abi: NFT_EXCHANGE_ABI,
     functionName: functionName,
     args: args,

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import {
-  useNFTContract,
-  useNFTExchangeContractAddress,
-} from "src/utils/contract";
+import { useNFTContract } from "src/utils/contract";
+import { useNetworkConst } from "src/utils/hooks";
 import { logalert } from "src/utils/logalert";
 
 import { STATUS, useStatusContext } from "./StatusContext";
@@ -23,7 +21,7 @@ export const useStatusCheck = () => {
   const receiverNFTTokenId = watch("receiverNFTTokenId");
 
   const contract = useNFTContract(senderNFTContractAddress);
-  const NFT_EXCHANGE_ADDRESS = useNFTExchangeContractAddress();
+  const { nftExchangeContractAddress } = useNetworkConst();
 
   const { setStatus, status } = useStatusContext();
   const [prevNFT, setPrevNFT] = useState<string>("");
@@ -43,7 +41,7 @@ export const useStatusCheck = () => {
         contract
           ?.getApproved(senderNFTTokenId)
           .then((res) => {
-            if (res === NFT_EXCHANGE_ADDRESS) {
+            if (res === nftExchangeContractAddress) {
               setStatus(STATUS.APPROVED);
             } else {
               setStatus(STATUS.NO_APPROVED);
@@ -69,7 +67,7 @@ export const useStatusCheck = () => {
     status,
     prevNFT,
     contract,
-    NFT_EXCHANGE_ADDRESS,
+    nftExchangeContractAddress,
     setStatus,
   ]);
 };

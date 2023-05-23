@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { alchemySepolia } from "src/libs/alchemy/alchemy";
-import { useAlchemy } from "src/utils/hooks/useAlchemy";
+import { useNetworkConst } from "src/utils/hooks";
 import { logalert } from "src/utils/logalert";
 import { imgStr } from "src/utils/string";
 
@@ -26,7 +25,7 @@ export const useGetNftMetadata = () => {
   const senderNFTTokenId = watch("senderNFTTokenId");
   const receiverNFTContractAddress = watch("receiverNFTContractAddress");
   const receiverNFTTokenId = watch("receiverNFTTokenId");
-  const alchemy = useAlchemy();
+  const { alchemy } = useNetworkConst();
 
   const [prevSenderNFT, setPrevSenderNFT] = useState<string>("");
   const [prevReceiverNFT, setPrevReceiverNFT] = useState<string>("");
@@ -85,7 +84,7 @@ export const useGetNftMetadata = () => {
     }
     setPrevSenderNFT(`${senderNFTContractAddress}-${senderNFTTokenId}`);
     setSenderNFT(undefined);
-    alchemySepolia.nft
+    alchemy.nft
       .getNftMetadata(senderNFTContractAddress, senderNFTTokenId)
       .then((res) => {
         setSenderNFT({
@@ -98,6 +97,7 @@ export const useGetNftMetadata = () => {
         logalert(e.message);
       });
   }, [
+    alchemy,
     isSenderValid,
     prevSenderNFT,
     senderNFTContractAddress,

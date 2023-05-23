@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Order } from "src/utils/contract";
-import { useNFTExchangeContractAddress } from "src/utils/contract";
 import { useGetApprove } from "src/utils/contract";
+import { useNetworkConst } from "src/utils/hooks";
 import type { Address } from "wagmi";
 
 import { ApproveButton } from "./ApproveButton";
@@ -16,13 +16,13 @@ type Props = {
 export const ActionField = ({ onComplete, order, sender }: Props) => {
   const { receiverNFTContractAddress, receiverNFTTokenId } = order;
   const [isApproved, setIsApproved] = useState<boolean>(false);
-  const contractAddreess = useNFTExchangeContractAddress();
+  const { nftExchangeContractAddress } = useNetworkConst();
 
   const { refetch } = useGetApprove({
     nftAddress: receiverNFTContractAddress,
     nftTokenId: receiverNFTTokenId,
     onSuccess: (data) => {
-      setIsApproved(contractAddreess == data);
+      setIsApproved(nftExchangeContractAddress == data);
     },
   });
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { useGetOrder } from "src/utils/contract";
-import { useAlchemy } from "src/utils/hooks/useAlchemy";
+import { useNetworkConst } from "src/utils/hooks";
 import { logalert } from "src/utils/logalert";
 import { imgStr } from "src/utils/string";
 
@@ -22,7 +22,7 @@ type NFTMetadataList =
 
 export const useGetNftMetadata = ({ order }: Props) => {
   const [nftMetadata, setNftMetadata] = useState<NFTMetadataList>(undefined);
-  const alchemy = useAlchemy();
+  const { alchemy } = useNetworkConst();
   useEffect(() => {
     alchemy.nft
       .getNftMetadataBatch([
