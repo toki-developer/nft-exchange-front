@@ -11,7 +11,9 @@ export const MainCard = ({ children }: PropsWithChildren) => {
   return (
     <div className="relative">
       <MainCardBlock />
-      <Card className="bg-gray-800 ring-gray-600">{children}</Card>
+      <Card className="bg-bgcolor ring-0 md:ring-1 md:bg-gray-800 ring-gray-600">
+        {children}
+      </Card>
     </div>
   );
 };

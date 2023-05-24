@@ -10,7 +10,7 @@ export const Layout: NextLayout = (page) => {
   return (
     <div>
       <Header />
-      <main className="max-w-xl mx-auto mt-16">{page}</main>
+      <main className="max-w-xl mx-auto mt-2 md:mt-16">{page}</main>
       <HowToUse />
     </div>
   );
