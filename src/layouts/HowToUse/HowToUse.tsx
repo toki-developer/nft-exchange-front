@@ -1,4 +1,4 @@
-import { User } from "src/components/Icon";
+import { DevicePhone, User } from "src/components/Icon";
 import { TextWithLine } from "src/components/Text";
 
 /**
@@ -52,9 +52,9 @@ export const HowToUse = () => {
 const UserIcon = () => <User className="w-12 h-12 mx-auto" />;
 
 const Create = () => (
-  <div className="bg-gray-800 w-2/3 mx-auto border border-gray-600 rounded text-sm">
+  <div className="bg-gray-800 ml-2 md:w-2/3 md:mx-auto border border-gray-600 rounded text-xs md:text-sm">
     <p className="text-center mt-2">オファー作成ページ</p>
-    <ol className="ml-4 mt-4 mb-4 [&>li]:mt-2">
+    <ol className="mx-1 md:ml-4 mt-4 mb-4 [&>li]:mt-4 md:[&>li]:mt-2">
       <li>1. 送るNFT・受け取るNFTの入力</li>
       <li>2. 自分のNFTの権限を付与(Approve)</li>
       <li>3. 交換オファーの作成</li>
@@ -65,8 +65,18 @@ const Create = () => (
 
 const UrlSend = () => (
   <div className="flex relative">
-    <p className="text-center flex-1">交換用URLを交換相手に送る</p>
-    <p className="text-center flex-1">交換用URLを受け取り、開く</p>
+    <p className="text-center flex-1 md:hidden text-xs">
+      <DevicePhone className="mx-auto w-6 h-6" />
+    </p>
+    <p className="text-center flex-1 md:hidden text-xs">
+      <DevicePhone className="mx-auto w-6 h-6" />
+    </p>
+    <p className="text-center flex-1 hidden md:block">
+      交換用URLを交換相手に送る
+    </p>
+    <p className="text-center flex-1 hidden md:block">
+      交換用URLを受け取り、開く
+    </p>
     <div className="absolute top-1/2 translate-y-0.5 left-1/2 translate-x-10">
       <p className="absolute bottom-1 right-8 text-sm text-gray-600">URL</p>
       <div className="w-20 h-[2px] bg-gray-600 absolute bottom-0 right-0" />
@@ -76,9 +86,9 @@ const UrlSend = () => (
 );
 
 const Approve = () => (
-  <div className="bg-gray-800 w-2/3 mx-auto border border-gray-600 rounded text-sm">
+  <div className="bg-gray-800 mr-2 md:w-2/3 md:mx-auto border border-gray-600 rounded text-xs md:text-sm">
     <p className="text-center mt-2">オファー承認ページ</p>
-    <ol className="ml-4 mt-4 mb-4 [&>li]:mt-2">
+    <ol className="mx-1 md:ml-4  mt-4 mb-4 [&>li]:mt-4 md:[&>li]:mt-2">
       <li>1. オファーの確認</li>
       <li>2. 自分のNFTの権限を付与(Approve)</li>
       <li>3. 交換オファーを承認</li>
