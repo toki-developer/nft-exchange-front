@@ -84,14 +84,22 @@ const NFTInfo = ({ contractAddress, imgUrl, name, tokenId }: NFTInfoProps) => {
   return (
     <div className="flex mt-6">
       <div className="ml-6 flex-none">
-        <img
-          className=" w-16 h-16 md:w-24 md:h-24"
-          src={imgUrl}
-          alt="receiver nft image"
-        />
+        {imgUrl ? (
+          <img
+            className=" w-16 h-16 md:w-24 md:h-24"
+            src={imgUrl}
+            alt="receiver nft image"
+          />
+        ) : (
+          <div className=" w-16 h-16 md:w-24 md:h-24" />
+        )}
       </div>
       <div className="ml-4 md:ml-8 md:mt-3 min-w-0">
-        <p className="text-lg truncate">{name}</p>
+        {name ? (
+          <p className="text-lg truncate">{name}</p>
+        ) : (
+          <div className=" h-7" />
+        )}
         <p className="mt-1 flex">
           <Icon
             className=" [&>div]:bg-primary cursor-pointer group p-0"

@@ -10,6 +10,10 @@ export const OrderApprove = () => {
   const router = useRouter();
   const sender = router.query.sender as `0x${string}` | null;
 
+  if (!router.isReady) {
+    return null;
+  }
+
   if (sender) {
     return (
       <MainCard>
