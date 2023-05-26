@@ -15,7 +15,7 @@ const ModalBase = ({
   return (
     <Transition appear show={isModalVisible} as="div" className="absolute">
       <Dialog as="div" className={`fixed inset-0 z-50`} onClose={onClose}>
-        <div className="py-7 min-h-screen">
+        <div className="py-16 min-h-screen px-2 w-full">
           <Transition.Child
             enter="ease-out duration-500"
             enterFrom="opacity-0"
@@ -34,10 +34,10 @@ const ModalBase = ({
             leave="ease-in duration-200"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
-            className="w-fit mx-auto"
+            className="w-full mx-auto"
           >
             <div
-              className={`p-8 text-textcolor-main m-auto w-[600px] border border-gray-600 bg-gray-800 rounded-md transition-all transform`}
+              className={`p-3 md:p-8 text-textcolor-main mx-auto w-full max-w-[600px] border border-gray-600 bg-gray-800 rounded-md transition-all transform`}
             >
               {children}
             </div>

@@ -116,7 +116,7 @@ const OrderRequestActionFieldImpl = ({ address }: { address: Address }) => {
       <ApproveButton />
       <OrderButton onOfferCreated={handleOffreCreated} />
       {orderData?.senderNFTContractAddress !== ethers.constants.AddressZero ? (
-        <div className="absolute right-6 bottom-6 text-sm">
+        <div className="absolute md:right-6 md:bottom-6 text-sm -bottom-6">
           <button
             className="underline text-textcolor-sub"
             onClick={handlShowOffer}

@@ -1,6 +1,7 @@
 /**
  * @package
  */
-export const addShortStr = (address: string) => {
-  return address.replace(/(.{7}).*(.{7})/, "$1...$2");
+export const addShortStr = (address: string, num = 7) => {
+  const regex = new RegExp(`(.{${num}}).*(.{${num}})`, "g");
+  return address.replace(regex, "$1...$2");
 };

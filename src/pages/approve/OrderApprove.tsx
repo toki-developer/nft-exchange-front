@@ -20,7 +20,9 @@ export const OrderApprove = () => {
 
   return (
     <MainCard>
-      <p>オファー作成者からURLを共有してもらってください</p>
+      <p className="text-center text-sm md:text-base">
+        オファー作成者からURLを共有してもらってください
+      </p>
     </MainCard>
   );
 };

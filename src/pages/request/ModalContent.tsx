@@ -4,7 +4,6 @@ import { ClipboardDocument } from "src/components/Icon";
 import { TextWithLine } from "src/components/Text";
 import { pagesPath } from "src/libs/path/$path";
 import type { Order } from "src/utils/contract";
-import { addShortStr } from "src/utils/string";
 import { useAccount } from "wagmi";
 
 import type { NFTMetadataList } from "./OrderRequestActionField";
@@ -21,7 +20,7 @@ type Props = {
 export const ModalContent = ({ nftMetadata, order, title }: Props) => {
   return (
     <div>
-      <p className="text-center text-xl font-bold">{title}</p>
+      <p className="text-center text-base md:text-xl font-bold">{title}</p>
       <OrderInfo order={order} nftMetadata={nftMetadata} />
       <Step />
     </div>
@@ -55,55 +54,57 @@ const OrderInfo = ({
 
   return (
     <section className="mt-8">
-      <TextWithLine>作成済みオファー</TextWithLine>
+      <TextWithLine className="text-sm md:text-base">
+        作成済みオファー
+      </TextWithLine>
       <div className="flex w-full">
-        <section className="ml-4 mt-3 flex-1">
+        <section className="md:ml-4 mt-3 flex-1 min-w-0 px-2">
           <h3 className="text-textcolor-sub ml-2">送るNFT</h3>
           <div className="text-center mt-6">
             <img
               src={nftMetadata.sender?.imgUrl}
-              className="w-24 h-24 mx-auto"
+              className="w-16 h-16 md:w-24 md:h-24 mx-auto"
               alt="sender nft image"
             />
-            <p className="mt-2">{nftMetadata.sender?.name ?? ""}</p>
-            <p className="mt-1">
+            <p className="mt-2 truncate">{nftMetadata.sender?.name ?? ""}</p>
+            <p className="mt-1 flex items-center">
               <Icon
-                className=" [&>div]:bg-primary cursor-pointer group"
+                className=" [&>div]:bg-primary cursor-pointer group flex-1 min-w-0"
                 icon={() => (
-                  <span className="text-textcolor-main group-hover:text-primary transition-all">
-                    {addShortStr(order.senderNFTContractAddress)}
+                  <span className="text-textcolor-main group-hover:text-primary transition-all truncate">
+                    {order.senderNFTContractAddress}
                   </span>
                 )}
                 tooltip={tooltipText || order.senderNFTContractAddress}
                 onMouseLeave={resetText}
                 onClick={handleClickSender}
               />
-              #{order.senderNFTTokenId.toString()}
+              <span>#{order.senderNFTTokenId.toString()}</span>
             </p>
           </div>
         </section>
-        <section className="ml-4 mt-3 flex-1">
+        <section className="md:ml-4 mt-3 flex-1 min-w-0 px-2">
           <h3 className="text-textcolor-sub ml-2">受け取るNFT</h3>
           <div className="text-center mt-6">
             <img
               src={nftMetadata.receiver?.imgUrl}
-              className="w-24 h-24 mx-auto"
+              className="w-16 h-16 md:w-24 md:h-24 mx-auto"
               alt="receiver nft image"
             />
-            <p className="mt-2">{nftMetadata.receiver?.name ?? ""}</p>
-            <p className="mt-1">
+            <p className="mt-2 truncate">{nftMetadata.receiver?.name ?? ""}</p>
+            <p className="mt-1 flex items-center px-4">
               <Icon
-                className=" [&>div]:bg-primary cursor-pointer group"
+                className=" [&>div]:bg-primary cursor-pointer group flex-1 min-w-0"
                 icon={() => (
-                  <span className="text-textcolor-main group-hover:text-primary transition-all">
-                    {addShortStr(order.receiverNFTContractAddress)}
+                  <span className="text-textcolor-main group-hover:text-primary transition-all truncate">
+                    {order.senderNFTContractAddress}
                   </span>
                 )}
                 tooltip={tooltipText || order.receiverNFTContractAddress}
                 onMouseLeave={resetText}
                 onClick={handleClickReceiver}
               />
-              #{order.receiverNFTTokenId.toString()}
+              <span>#{order.receiverNFTTokenId.toString()}</span>
             </p>
           </div>
         </section>
@@ -136,8 +137,10 @@ const Step = () => {
 
   return (
     <section className="mt-8">
-      <TextWithLine>オファー作成後の流れ</TextWithLine>
-      <ol className="ml-4 mt-3 space-y-3">
+      <TextWithLine className="text-sm md:text-base">
+        オファー作成後の流れ
+      </TextWithLine>
+      <ol className="md:ml-4 mt-3 space-y-3 text-sm md:text-base">
         <li>
           <NumCircle num={1} />
           <span className="relative">
@@ -180,7 +183,7 @@ const Step = () => {
 
 const NumCircle = ({ num }: { num: number }) => {
   return (
-    <span className="border-textcolor-main border-2 rounded-full w-6 h-6 inline-flex justify-center items-center mr-2">
+    <span className="border-textcolor-main border-2 rounded-full w-4 h-4 md:w-6 md:h-6 inline-flex justify-center items-center mr-2">
       {num}
     </span>
   );

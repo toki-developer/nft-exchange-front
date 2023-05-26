@@ -52,7 +52,7 @@ export const HowToUse = () => {
 const UserIcon = () => <User className="w-12 h-12 mx-auto" />;
 
 const Create = () => (
-  <div className="bg-gray-800 ml-2 md:w-2/3 md:mx-auto border border-gray-600 rounded text-xs md:text-sm">
+  <div className="bg-gray-800 md:w-2/3 md:mx-auto border border-gray-600 rounded text-xs md:text-sm translate-x-6 md:translate-x-0">
     <p className="text-center mt-2">オファー作成ページ</p>
     <ol className="mx-1 md:ml-4 mt-4 mb-4 [&>li]:mt-4 md:[&>li]:mt-2">
       <li>1. 送るNFT・受け取るNFTの入力</li>
@@ -86,7 +86,7 @@ const UrlSend = () => (
 );
 
 const Approve = () => (
-  <div className="bg-gray-800 mr-2 md:w-2/3 md:mx-auto border border-gray-600 rounded text-xs md:text-sm">
+  <div className="bg-gray-800 md:w-2/3 md:mx-auto border border-gray-600 rounded text-xs md:text-sm -translate-x-6 md:-translate-x-0">
     <p className="text-center mt-2">オファー承認ページ</p>
     <ol className="mx-1 md:ml-4  mt-4 mb-4 [&>li]:mt-4 md:[&>li]:mt-2">
       <li>1. オファーの確認</li>
