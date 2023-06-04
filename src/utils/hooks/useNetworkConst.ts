@@ -1,7 +1,7 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import type { Address } from "wagmi";
 import { useNetwork } from "wagmi";
-import { polygon } from "wagmi/chains";
+import { mainnet, polygon } from "wagmi/chains";
 
 type Return = {
   alchemy: Alchemy;
@@ -17,6 +17,14 @@ export const useNetworkConst = (): Return => {
       alchemy: alchemyPolygon,
       blockexplorerPrefix: ETHERSCAN_POLYGON,
       nftExchangeContractAddress: NEXT_PUBLIC_CONTRACT_ADDRESS_POLYGON,
+    };
+  }
+
+  if (chain?.name == mainnet.name) {
+    return {
+      alchemy: alchemyMainnet,
+      blockexplorerPrefix: ETHERSCAN_MAINNET,
+      nftExchangeContractAddress: NEXT_PUBLIC_CONTRACT_ADDRESS_MAINNET,
     };
   }
 
@@ -38,6 +46,9 @@ const NEXT_PUBLIC_CONTRACT_ADDRESS_POLYGON =
   process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_POLYGON;
 
 // Ethereum
+const ETHERSCAN_MAINNET = "https://etherscan.io";
+const NEXT_PUBLIC_CONTRACT_ADDRESS_MAINNET =
+  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_MAINNET;
 
 // Alchemy
 const settings = {
@@ -49,7 +60,12 @@ const settings = {
     apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_POLYGON,
     network: Network.MATIC_MAINNET,
   },
+  mainnet: {
+    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_POLYGON,
+    Network: Network.ETH_MAINNET,
+  },
 };
 
 const alchemySepolia = new Alchemy(settings.sepolia);
 const alchemyPolygon = new Alchemy(settings.polygon);
+const alchemyMainnet = new Alchemy(settings.mainnet);
