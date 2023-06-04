@@ -1,5 +1,6 @@
 import { DevicePhone, User } from "src/components/Icon";
 import { TextWithLine } from "src/components/Text";
+import { addShortStr } from "src/utils/string";
 
 /**
  * @package
@@ -45,6 +46,7 @@ export const HowToUse = () => {
           <Complete />
         </div>
       </div>
+      <Notes />
     </article>
   );
 };
@@ -119,3 +121,20 @@ const Arrow = ({ dark }: { dark?: boolean }) => (
     />
   </div>
 );
+
+
+const Notes = () => {
+  return  (
+    <div className="px-8">
+      <div className="my-20 border border-gray-600 px-4 md:px-8 py-4 flex md:flex-row flex-col justify-around items-center text-sm md:text-base">
+        <p>本サービスの利用により万が一被害が発生した場合、<br className="hidden md:inline"/>私は責任を負いかねます。<br className="hidden md:inline"/> コントラクトをご確認してからご利用ください。</p>
+        <div className="md:h-20 md:w-[2px] md:my-0 h-[2px] w-64 my-6 bg-gray-600" />
+        <div className="">
+          <p>Ethereum: <a href="https://etherscan.io/address/0x7CAD0C36e7f3Bd16f8E085396883cade4B12Edd7#code" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline font-bold ml-1">{addShortStr("0x7CAD0C36e7f3Bd16f8E085396883cade4B12Edd7")}</a></p>
+          <p>Polygon: <a href="https://polygonscan.com/address/0x4f0c45a87C0B1240689a19Ff1bFeE919Ab187e9f#code" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline font-bold ml-1">{addShortStr("0x4f0c45a87C0B1240689a19Ff1bFeE919Ab187e9f")}</a></p>
+          <p>Sepolia: <a href="https://sepolia.etherscan.io/address/0x3eD98e05eD1e0D00a6947C9031B6344a6B5ca51b#code" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline font-bold ml-1">{addShortStr("0x3eD98e05eD1e0D00a6947C9031B6344a6B5ca51b")}</a></p>
+        </div>
+      </div>
+    </div>
+  )
+}
